@@ -60,7 +60,7 @@ dependencies:
   path_provider: ^2.1.5
   get: ^4.6.6
   delightful_toast: ^1.1.0
-  printing: ^5.13.4
+  printing: ^5.0.4
 
 dev_dependencies:
   flutter_test:

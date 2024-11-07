@@ -92,18 +92,7 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> w
     }
   }
 
-  Future<void> generateAndSharePDF() async {
-    if (subscription == null || profile == null) return;
 
-    final pdf = pw.Document();
-    // PDF generation logic (remains same)
-    final directory = await getTemporaryDirectory();
-    final filePath = "${directory.path}/subscription_invoice.pdf";
-    final file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
-
-    await Share.shareXFiles([XFile(filePath)], text: 'Here is your subscription invoice');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +200,7 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> w
               Text('End Date: ${subscription!['end_date'].toDate().toString().split(' ')[0]}', style: TextStyle(fontSize: 18.sp)),
               if (holdDate != null) ...[
                 Divider(),
-                Text('Hold Date: $holdDate', style: TextStyle(fontSize: 18.sp, color: Colors.orange)),
+              //  Text('Hold Date: $holdDate', style: TextStyle(fontSize: 18.sp, color: Colors.orange)),
               ],
             ],
           ),
@@ -253,4 +242,81 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> w
       ),
     );
   }
+
+
+
+
+
+
+
+
+
+
+Future<void> generateAndSharePDF() async {
+  if (subscription == null || profile == null) return;
+
+  final pdf = pw.Document();
+
+  // Add User Profile Section to PDF
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) {
+        return pw.Column(
+          children: [
+            pw.Text('User Profile', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 10),
+            pw.Text('Name: ${profile!['username']}'),
+            pw.Text('Email: ${profile!['email']}'),
+            pw.Text('Phone: ${profile!['mobile']}'),
+            pw.Text('Address: ${profile!['address']}'),
+            pw.SizedBox(height: 20),
+            pw.Text('Subscription Details', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 10),
+            pw.Text('Total Price: ₹${subscription!['total_price']}'),
+            pw.Text('Start Date: ${subscription!['start_date'].toDate().toString().split(' ')[0]}'),
+            pw.Text('End Date: ${subscription!['end_date'].toDate().toString().split(' ')[0]}'),
+            if (holdDate != null) ...[
+              pw.SizedBox(height: 10),
+              pw.Text('Hold Date: $holdDate', style: pw.TextStyle()),
+            ],
+            pw.SizedBox(height: 20),
+            pw.Text('Products', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 10),
+          ],
+        );
+      },
+    ),
+  );
+
+  // Add Product Details to PDF
+  for (var product in subscription!['products']) {
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            children: [
+              pw.Text(product['name'], style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+              pw.Text('Quantity: ${product['quantity']}'),
+              pw.Text('Price: ₹${product['price']}'),
+              pw.Text('Start Date: ${product['start_date'].toDate().toString().split(' ')[0]}'),
+              pw.Text('End Date: ${product['end_date'].toDate().toString().split(' ')[0]}'),
+              pw.SizedBox(height: 20),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  // Save PDF file
+  final directory = await getTemporaryDirectory();
+  final filePath = "${directory.path}/subscription_invoice.pdf";
+  final file = File(filePath);
+  await file.writeAsBytes(await pdf.save());
+
+  // Share PDF
+  await Share.shareXFiles([XFile(filePath)], text: 'Here is your subscription invoice');
+}
+
+
 }
