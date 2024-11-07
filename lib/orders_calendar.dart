@@ -1,3 +1,5 @@
+import 'package:agaram_dairy/data/Payment/paymet_screen.dart';
+import 'package:agaram_dairy/data/monthly_subscription_screen.dart';
 import 'package:agaram_dairy/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -159,7 +161,7 @@ child:                      const Text(
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) =>
-                    SubscriptionGrid(subscriptionproducts:widget.products,uid: widget.userid)),
+                    PaymentPage(uid: widget.userid, products: widget.products, price: totalPrice,)),
               );
               },
             style: ElevatedButton.styleFrom(

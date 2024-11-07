@@ -12,129 +12,129 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dashboard.dart';
 
-class SubscriptionGrid extends StatefulWidget {
+// class SubscriptionGrid extends StatefulWidget {
 
-  final String uid;
- final List<Products> subscriptionproducts;
-  const SubscriptionGrid(
-      {super.key,
-      required this.subscriptionproducts,
-      required this.uid,});
-
-
-  @override
-  State<SubscriptionGrid> createState() => _SubscriptionGridState();
-}
+//   final String uid;
+//  final List<Products> subscriptionproducts;
+//   const SubscriptionGrid(
+//       {super.key,
+//       required this.subscriptionproducts,
+//       required this.uid,});
 
 
-
-class _SubscriptionGridState extends State<SubscriptionGrid> {
-
-  double totalprice=0;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    if(widget.subscriptionproducts.isNotEmpty)
-      {
-        gettingtotalprice(widget.subscriptionproducts);
-        // saveSession(widget.subscriptionproducts);
-        print('done');
-      }
-  }
+//   @override
+//   State<SubscriptionGrid> createState() => _SubscriptionGridState();
+// }
 
 
-//   Future<bool> saveSession(List<Product> items) async {
-//     final prefs = await SharedPreferences.getInstance();
-//
-//     for(var item in items)
+
+// class _SubscriptionGridState extends State<SubscriptionGrid> {
+
+//   double totalprice=0;
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     if(widget.subscriptionproducts.isNotEmpty)
 //       {
-//         prefs.setString(item.name, item.name);
-//         prefs.setDouble(item.price as String, item.price);
-//         prefs.setInt(item.times as String,item.times);
+//         gettingtotalprice(widget.subscriptionproducts);
+//         // saveSession(widget.subscriptionproducts);
+//         print('done');
 //       }
-// print("Cached Are Stored");
-// return true;
 //   }
 
 
-
-    // Future<bool> insertSubscription() async {
-    //   try {
-    //     final subscriptionDetailsDoc = FirebaseFirestore.instance
-    //         .collection('agaram')
-    //         .doc('user_delivery')
-    //         .collection('users')
-    //         .doc(widget.uid)
-    //         .collection("booking")
-    //         .doc('subscriptions_details');
-    //
-    //     List<Map<String, dynamic>> subscriptionList = [];
-    //
-    //     for (var item in widget.subscriptionproducts) {
-    //       subscriptionList.add({
-    //         'subscription_issued': item.name,
-    //         'price': item.price,
-    //         'times': item.times,
-    //         'category': item.category,
-    //         'subs': item.subs,
-    //         'imageUrl': item.imageUrl,
-    //                 });
-    //     }
-    //
-    //     await subscriptionDetailsDoc.set({
-    //       'subscriptions': subscriptionList,
-    //       'issued': false
-    //     });
-    //
-    //   return true;
-    //   } catch (e) {
-    //     print(e);
-    //     return false;
-    //   }
-    // }
+// //   Future<bool> saveSession(List<Product> items) async {
+// //     final prefs = await SharedPreferences.getInstance();
+// //
+// //     for(var item in items)
+// //       {
+// //         prefs.setString(item.name, item.name);
+// //         prefs.setDouble(item.price as String, item.price);
+// //         prefs.setInt(item.times as String,item.times);
+// //       }
+// // print("Cached Are Stored");
+// // return true;
+// //   }
 
 
 
-  Future<void> gettingtotalprice(List<Products> list)
-  async {
-    print("Im Acessing gettingtotalprice()");
-    int temp;
-    for (var product in list) {
-      this.totalprice += product.p_quantity * product.p_price;
-      print('totalprice= ${product.p_quantity}  ${product.p_price}');
-    }
+//     // Future<bool> insertSubscription() async {
+//     //   try {
+//     //     final subscriptionDetailsDoc = FirebaseFirestore.instance
+//     //         .collection('agaram')
+//     //         .doc('user_delivery')
+//     //         .collection('users')
+//     //         .doc(widget.uid)
+//     //         .collection("booking")
+//     //         .doc('subscriptions_details');
+//     //
+//     //     List<Map<String, dynamic>> subscriptionList = [];
+//     //
+//     //     for (var item in widget.subscriptionproducts) {
+//     //       subscriptionList.add({
+//     //         'subscription_issued': item.name,
+//     //         'price': item.price,
+//     //         'times': item.times,
+//     //         'category': item.category,
+//     //         'subs': item.subs,
+//     //         'imageUrl': item.imageUrl,
+//     //                 });
+//     //     }
+//     //
+//     //     await subscriptionDetailsDoc.set({
+//     //       'subscriptions': subscriptionList,
+//     //       'issued': false
+//     //     });
+//     //
+//     //   return true;
+//     //   } catch (e) {
+//     //     print(e);
+//     //     return false;
+//     //   }
+//     // }
 
-    // var result = await insertSubscription();
-    // print(result? "pass":"failed");
-    print("Total Price Is $totalprice");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Subscription Plans'),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
 
 
+//   Future<void> gettingtotalprice(List<Products> list)
+//   async {
+//     print("Im Acessing gettingtotalprice()");
+//     int temp;
+//     for (var product in list) {
+//       this.totalprice += product.p_quantity * product.p_price;
+//       print('totalprice= ${product.p_quantity}  ${product.p_price}');
+//     }
 
-          if (constraints.maxWidth > 600) {
-            // Wide screen layout
-            return WideScreenLayout(products: widget.subscriptionproducts,uid: widget.uid, price: totalprice);
-          } else {
-            // Narrow screen layout
-            return NarrowScreenLayout(product:widget.subscriptionproducts,uid: widget.uid, price: totalprice);
-          }
-        },
-      ),
-    );
-  }
-}
+//     // var result = await insertSubscription();
+//     // print(result? "pass":"failed");
+//     print("Total Price Is $totalprice");
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Subscription Plans'),
+//         centerTitle: true,
+//         backgroundColor: Colors.white,
+//       ),
+//       body: LayoutBuilder(
+//         builder: (context, constraints) {
+
+
+
+//           if (constraints.maxWidth > 600) {
+//             // Wide screen layout
+//             return WideScreenLayout(products: widget.subscriptionproducts,uid: widget.uid, price: totalprice);
+//           } else {
+//             // Narrow screen layout
+//             return NarrowScreenLayout(product:widget.subscriptionproducts,uid: widget.uid, price: totalprice);
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class WideScreenLayout extends StatelessWidget {
   final String uid;

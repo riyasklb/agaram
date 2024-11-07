@@ -1,7 +1,10 @@
+import 'package:agaram_dairy/data/details/subscription_detail_screendart';
 import 'package:agaram_dairy/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'calendar.dart';
@@ -45,8 +48,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 10.0),
-                  child: const CircleAvatar(
-                    backgroundImage: AssetImage('assets/icons/person_icon.png'),
+                  child: InkWell(onTap: (){Get.to( SubscriptionDetailsScreen(uid: uid));},
+                    child: const CircleAvatar(
+                      backgroundImage: AssetImage('assets/icons/person_icon.png'),
+                    ),
                   ),
                 ),
                 Column(
