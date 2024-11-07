@@ -1,5 +1,6 @@
 import 'package:agaram_dairy/dashboard.dart';
 import 'package:agaram_dairy/data/Payment/controller.dart';
+
 import 'package:agaram_dairy/data/Payment/sucess_full_screen.dart';
 import 'package:agaram_dairy/data/contats/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Firestore import
@@ -49,7 +50,7 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kblue,
+        backgroundColor: Colors.green,
         title: Text(
           'Payment',
           style: GoogleFonts.lato(
@@ -63,7 +64,6 @@ class _PaymentPageState extends State<PaymentPage> {
       body: Padding(
         padding: EdgeInsets.all(16.0.w),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
@@ -84,11 +84,102 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               textAlign: TextAlign.center,
             ),
+            SizedBox(height: 24.h),
+
+            // Product Details
+            Text(
+              'Products:',
+              style: GoogleFonts.poppins(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            SizedBox(height: 8.h),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.products.length,
+              itemBuilder: (context, index) {
+                final product = widget.products[index];
+                return Card(
+                  margin: EdgeInsets.only(bottom: 8.h),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  elevation: 3,
+                  child: Padding(
+                    padding: EdgeInsets.all(12.0.w),
+                    child: Row(
+                      children: [CircleAvatar(backgroundImage: AssetImage('assets/images/logo.jpg'),),
+                        // Image.network(
+                        //   product.p_image,
+                        //   width: 60.w,
+                        //   height: 60.h,
+                        //   fit: BoxFit.cover,
+                        // ),
+                        SizedBox(width: 12.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.p_name,
+                              style: GoogleFonts.poppins(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              'Quantity: ${product.p_quantity}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 14.sp,
+                                color: Colors.black54,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              'Price: ₹${(product.p_price * product.p_quantity).toStringAsFixed(2)}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 14.sp,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 24.h),
+
+            // Subscription Information
+            Text(
+              'Monthly Subscription:',
+              style: GoogleFonts.poppins(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              'This is a monthly subscription that will be automatically renewed every month. You can manage your subscription at any time.',
+              style: GoogleFonts.poppins(
+                fontSize: 14.sp,
+                color: Colors.black54,
+              ),
+              textAlign: TextAlign.center,
+            ),
             SizedBox(height: 40.h),
+
+            // Pay Now Button
             ElevatedButton(
               onPressed: openPaymentGateway,
               style: ElevatedButton.styleFrom(
-                backgroundColor: kblue,
+                backgroundColor: Colors.green,
                 padding: EdgeInsets.symmetric(vertical: 14.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
@@ -162,7 +253,7 @@ class _PaymentPageState extends State<PaymentPage> {
       );
 
       // Navigate to Dashboard or ReferralScreen after payment success
-      Get.offAll(() => PaymentSuccessScreen(paymentId: response.paymentId.toString(),));
+      Get.offAll(() => PaymentSuccessScreen(paymentId: response.paymentId.toString(),uid: widget.uid,));
     } catch (e) {
       print('Error storing payment details: $e');
       showAlertDialog(context, "Error", "Failed to store payment details.");
@@ -210,3 +301,4 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 }
+

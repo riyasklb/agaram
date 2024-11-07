@@ -1,3 +1,4 @@
+import 'package:agaram_dairy/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,8 +6,9 @@ import 'package:get/get.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
   final String paymentId;
+  final String uid;
 
-  const PaymentSuccessScreen({Key? key, required this.paymentId}) : super(key: key);
+  const PaymentSuccessScreen({Key? key, required this.paymentId,required this.uid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,7 @@ class PaymentSuccessScreen extends StatelessWidget {
               SizedBox(height: 24.h),
               ElevatedButton(
                 onPressed: () {
-                  Get.offAllNamed('/dashboard'); // Navigate to dashboard or home
+                  Get.to(HomeScreen(uid: uid,));// Navigate to dashboard or home
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
