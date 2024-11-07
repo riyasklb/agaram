@@ -1,4 +1,5 @@
-import 'package:agaram_dairy/data/details/subscription_detail_screendart';
+
+
 import 'package:agaram_dairy/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'calendar.dart';
+
+import 'data/details/details_screen.dart';
 import 'orders_calendar.dart';
 
 
@@ -220,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(360, 690), minTextAdapt: true, splitScreenMode: true);
+   
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
