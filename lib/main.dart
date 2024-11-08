@@ -7,7 +7,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Loginpage.dart';
 import 'Signuppage.dart';
-import 'dashboard-demo.dart';
 import 'dashboard.dart';
 
 void main() async {

@@ -1,12 +1,11 @@
 import 'package:agaram_dairy/data/Payment/paymet_screen.dart';
-import 'package:agaram_dairy/data/monthly_subscription_screen.dart';
 import 'package:agaram_dairy/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'SubscriptionCard.dart';
 import 'dashboard.dart';
 import 'fulladdress.dart';
+
+
 
 class OrdersConfirm extends StatefulWidget {
   final List<Products> products;
